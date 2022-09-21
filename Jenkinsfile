@@ -10,6 +10,8 @@ pipeline {
             steps {
                 echo 'BRANCH NAME: ' + env.BRANCH_NAME
                 echo sh(returnStdout: true, script: 'env')
+                sh 'git rev-parse HEAD > commit'
+                def commit = readFile('commit').trim()
             }
         }
         
