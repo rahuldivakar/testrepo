@@ -1,61 +1,36 @@
+
+ 
 pipeline {
+    /* specify nodes for executing */
     agent any
-    
+ 
     stages {
-        stage('configuration') {
+        /* checkout repo */
+        stage('Checkout SCM') {
             steps {
-                echo 'BRANCH NAME: ' + env.BRANCH_NAME
-                echo sh(returnStdout: true, script: 'env')
+                checkout([
+                 $class: 'GitSCM',
+                 branches: [[name: 'main']],
+                 userRemoteConfigs: [[
+                    url: 'https://github.com/rahuldivakar/testrepo',
+                    credentialsId: 'gitpass',
+                 ]]
+                ])
             }
         }
-        
-        stage('Testing') {
+         stage('Do the deployment') {
             steps {
-                script {
-                    sh 'echo "Testing"'
-                    sh "cat file.txt"
-                }
-            }
-        }
-        
-        stage("build"){
-            when {
-                branch 'main'
-            }
-            
-            steps{
-                sh 'echo "Build Started"'
-            }
-        }
-
-        stage("Deploy"){
-            when {
-                branch 'main'
-            }
-            
-            steps{
-                sh 'echo "Deploying App"'
+                sh 'ls'
+                echo ">> Run deploy applications "
             }
         }
     }
-    
-    post{
-        success{
-            setBuildStatus("Build succeeded", "SUCCESS");
+    post { 
+        always { 
+            cleanWs()
         }
-
-        failure {
-            setBuildStatus("Build failed", "FAILURE");
-        } 
     }
-}
+ 
+    /* Cleanup workspace */
 
-void setBuildStatus(String message, String state) {
-    step([
-        $class: "GitHubCommitStatusSetter",
-        reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/vaibhavkumar779/multibranchJenkinsPRbuildStatus"],
-        contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
-        errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
-        statusResultSource: [$class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]]]
-    ]);
 }
