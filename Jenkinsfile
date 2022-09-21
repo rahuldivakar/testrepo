@@ -14,6 +14,9 @@ pipeline {
                 sh 'git rev-parse HEAD > commit'
                 def commit = readFile('commit').trim()
                 sh 'echo $commit'
+              def branchName = scmVars.GIT_BRANCH
+              sh 'echo branchName'
+              println branchName
             }
             }
         }
