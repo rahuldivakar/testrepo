@@ -15,8 +15,7 @@ pipeline {
              script{
                 echo 'BRANCH NAME: ' + env.BRANCH_NAME
                 echo sh(returnStdout: true, script: 'env')
-                sh 'git rev-parse HEAD > commit'
-              sh 'cat commit'
+              echo "#######"
               echo env.GIT_BRANCH
               echo env.FULL_PATH_BRANCH
             }
