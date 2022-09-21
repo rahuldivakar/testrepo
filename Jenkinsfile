@@ -13,7 +13,8 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Testing"'
-                    sh "cat file.txt"
+                    
+                   }
                 }
             }
         }
