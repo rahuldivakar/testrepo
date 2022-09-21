@@ -15,7 +15,7 @@ pipeline {
              script{
                 echo 'BRANCH NAME: ' + env.BRANCH_NAME
                 echo sh(returnStdout: true, script: 'env')
-              echo "#######!!!!"
+              echo "#######!!"
               echo env.GIT_BRANCH
               echo env.FULL_PATH_BRANCH
             }
