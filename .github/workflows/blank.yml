@@ -16,10 +16,54 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: trigger single Job
-      uses: appleboy/jenkins-action@master
+#     - name: trigger single Job
+#       uses: appleboy/jenkins-action@master
+#       with:
+#         url: "http://20.55.106.199:8080/"
+#         user: "Cloudsolutions"
+#         token: ${{ secrets.JENKINSECRET }}
+#         job: "webhook"
+        
+    - name: "Trigger jenkins job"
+      uses: GoldenspearLLC/build-jenkins-job@master
       with:
-        url: "http://20.55.106.199:8080/"
+        jenkins-url: "http://20.55.106.199:8080/"
+        jenkins-token: ${{ secrets.JENKINSECRET }}
         user: "Cloudsolutions"
-        token: ${{ secrets.JENKINSECRET }}
-        job: "foobar"
+        job-path: "job/RD/job/webhook"
+    - name: Get job status
+      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+#   push:
+#     branches: [ "main" ]
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+#     - name: trigger single Job
+#       uses: appleboy/jenkins-action@master
+#       with:
+#         url: "http://20.55.106.199:8080/"
+#         user: "Cloudsolutions"
+#         token: ${{ secrets.JENKINSECRET }}
+#         job: "webhook"
+        
+    - name: "Trigger jenkins job"
+      uses: GoldenspearLLC/build-jenkins-job@master
+      with:
+        jenkins-url: "http://20.55.106.199:8080/"
+        jenkins-token: ${{ secrets.JENKINSECRET }}
+        user: "Cloudsolutions"
+        job-path: "job/RD/job/webhook"
+#     - name: Get job status
+#       run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
