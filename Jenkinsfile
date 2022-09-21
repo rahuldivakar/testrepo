@@ -6,6 +6,13 @@ pipeline {
  
     stages {
         /* checkout repo */
+         stage('configuration') {
+            steps {
+                echo 'BRANCH NAME: ' + env.BRANCH_NAME
+                echo sh(returnStdout: true, script: 'env')
+            }
+        }
+        
         stage('Checkout SCM') {
             steps {
                 checkout([
