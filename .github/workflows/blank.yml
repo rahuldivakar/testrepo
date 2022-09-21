@@ -28,7 +28,7 @@ jobs:
     - name: "Trigger jenkins job"
       uses: GoldenspearLLC/build-jenkins-job@master
       with:
-        jenkins-url: "http://20.55.106.199:8080/"
+        jenkins-url: "http://20.55.106.199:8080"
         jenkins-token: ${{ secrets.JENKINSECRET }}
         user: "Cloudsolutions"
         job-path: "job/RD/job/webhook"
