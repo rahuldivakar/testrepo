@@ -16,10 +16,20 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: trigger single Job
-      uses: appleboy/jenkins-action@master
+#     - name: trigger single Job
+#       uses: appleboy/jenkins-action@master
+#       with:
+#         url: "http://20.55.106.199:8080/"
+#         user: "Cloudsolutions"
+#         token: ${{ secrets.JENKINSECRET }}
+#         job: "webhook"
+        
+    - name: "Trigger jenkins job"
+      uses: GoldenspearLLC/build-jenkins-job@master
       with:
-        url: "http://20.55.106.199:8080/"
+        jenkins-url: "http://20.55.106.199:8080/"
+        jenkins-token: ${{ secrets.JENKINSECRET }}
         user: "Cloudsolutions"
-        token: ${{ secrets.JENKINSECRET }}
-        job: "webhook"
+        job-path: "job/RD/job/webhook"
+    - name: Get job status
+      run: echo "Job status is ${{ steps.job-build.outputs.job_status }}"
