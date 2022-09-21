@@ -53,7 +53,7 @@ jobs:
 #     - name: trigger single Job
 #       uses: appleboy/jenkins-action@master
 #       with:
-#         url: "http://20.55.106.199:8080/"
+#         url: "http://20.55.106.199:8080"
 #         user: "Cloudsolutions"
 #         token: ${{ secrets.JENKINSECRET }}
 #         job: "webhook"
