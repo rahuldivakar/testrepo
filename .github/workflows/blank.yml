@@ -22,4 +22,4 @@ jobs:
         url: "http://20.55.106.199:8080/"
         user: "Cloudsolutions"
         token: ${{ secrets.JENKINSECRET }}
-        job: "foobar"
+        job: "webhook"
