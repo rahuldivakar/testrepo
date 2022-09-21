@@ -3,6 +3,10 @@
 pipeline {
     /* specify nodes for executing */
     agent any
+ environment {
+    FULL_PATH_BRANCH = "${sh(script:'git name-rev --name-only HEAD', returnStdout: true)}"
+    GIT_BRANCH = FULL_PATH_BRANCH.substring(FULL_PATH_BRANCH.lastIndexOf('/') + 1, FULL_PATH_BRANCH.length())
+  }
  
     stages {
         /* checkout repo */
@@ -12,11 +16,9 @@ pipeline {
                 echo 'BRANCH NAME: ' + env.BRANCH_NAME
                 echo sh(returnStdout: true, script: 'env')
                 sh 'git rev-parse HEAD > commit'
-                def commit = readFile('commit').trim()
-                sh 'echo $commit'
-              def branchName = scmVars.GIT_BRANCH
-              sh 'echo branchName'
-              println branchName
+              sh 'cat commit'
+              echo env.GIT_BRANCH
+              echo env.FULL_PATH_BRANCH
             }
             }
         }
